@@ -78,7 +78,7 @@ public:
             { "summon",             SEC_MODERATOR,          false, &HandleSummonCommand,                "", NULL },
             { "groupsummon",        SEC_MODERATOR,          false, &HandleGroupSummonCommand,           "", NULL },
             { "commands",           SEC_PLAYER,             true,  &HandleCommandsCommand,              "", NULL },
-            { "die",                SEC_ADMINISTRATOR,      false, &HandleDieCommand,                   "", NULL },
+            { "kill",               SEC_ADMINISTRATOR,      false, &HandleDieCommand,                   "", NULL },
             { "revive",             SEC_ADMINISTRATOR,      true,  &HandleReviveCommand,                "", NULL },
             { "dismount",           SEC_PLAYER,             false, &HandleDismountCommand,              "", NULL },
             { "guid",               SEC_GAMEMASTER,         false, &HandleGUIDCommand,                  "", NULL },

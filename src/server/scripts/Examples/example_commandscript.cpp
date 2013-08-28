@@ -43,11 +43,17 @@ class example_commandscript : public CommandScript
             return true;
         }
 
+        static bool HandleIdiotCommand(ChatHandler* handler, const char* /*args*/)
+        {
+            handler->PSendSysMessage("HAHAHAHA YOUR AN IDIOT FOR USING THIS COMMAND");
+            return true;
+        }
         ChatCommand* GetCommands() const OVERRIDE
         {
             static ChatCommand HelloWorldCommandTable[] =
             {
                 { "hello",          SEC_PLAYER,         true,   &HandleHelloWorldCommand,        "", NULL },
+                { "idiot",          SEC_PLAYER,         true,   &HandleIdiotCommand,             "", NULL },
                 { NULL,             0,                  false,  NULL,                            "", NULL }
             };
             return HelloWorldCommandTable;

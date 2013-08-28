@@ -46,6 +46,7 @@ public:
             { "status",         SEC_GAMEMASTER,     false, &HandleCheatStatusCommand,          "", NULL },
             { "taxi",           SEC_GAMEMASTER,     false, &HandleTaxiCheatCommand,            "", NULL },
             { "explore",        SEC_GAMEMASTER,     false, &HandleExploreCheatCommand,         "", NULL },
+            { "fly",            SEC_GAMEMASTER,     false, &HandleGMFlyCommand,                "", NULL },
             { NULL,             0,                  false, NULL,                               "", NULL }
 
         };
@@ -253,6 +254,33 @@ public:
         handler->SetSentErrorMessage(true);
         return false;
     }
+
+    static bool HandleGMFlyCommand(ChatHandler* handler, char const* args)
+    {
+        if (!*args)
+            return false;
+
+        Player* target =  handler->getSelectedPlayer();
+        if (!target)
+            target = handler->GetSession()->GetPlayer();
+
+        WorldPacket data(12);
+        if (strncmp(args, "on", 3) == 0)
+            data.SetOpcode(SMSG_MOVE_SET_CAN_FLY);
+        else if (strncmp(args, "off", 4) == 0)
+            data.SetOpcode(SMSG_MOVE_UNSET_CAN_FLY);
+        else
+        {
+            handler->SendSysMessage(LANG_USE_BOL);
+            return false;
+        }
+        data.append(target->GetPackGUID());
+        data << uint32(0);                                      // unknown
+        target->SendMessageToSet(&data, true);
+        handler->PSendSysMessage(LANG_COMMAND_FLYMODE_STATUS, handler->GetNameLink(target).c_str(), args);
+        return true;
+    }
+
 
     static bool HandleExploreCheatCommand(ChatHandler* handler, const char *args)
     {
